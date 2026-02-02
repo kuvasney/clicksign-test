@@ -3,30 +3,6 @@
 @tailwind utilities;
 
 @layer components {
-  .text-main-title {
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 100%;
-    letter-spacing: 0%;
-  }
-
-  .text-body {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 22px;
-    letter-spacing: 0%;
-    text-align: center;
-  }
-
-  .text-heading {
-    font-weight: 600;
-    font-size: 24px;
-    margin-bottom: 24px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    text-align: center;
-  }
-
   .btn-default {
     display: flex;
     align-items: center;
@@ -39,5 +15,9 @@
 
   .btn-default:hover {
     background-color: #1f1283;
+  }
+
+  .text-shadow {
+    text-shadow: 0px 0px 4px #00000080;
   }
 }
