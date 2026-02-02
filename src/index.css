@@ -4,14 +4,40 @@
 
 @layer components {
   .text-main-title {
-    @apply font-normal text-[18px] leading-[100%] tracking-normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
   }
 
   .text-body {
-    @apply font-normal text-base leading-[22px] tracking-normal text-center;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0%;
+    text-align: center;
   }
-  
+
   .text-heading {
-    @apply font-semibold text-2xl leading-[100%] tracking-normal text-center;
+    font-weight: 600;
+    font-size: 24px;
+    margin-bottom: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+  }
+
+  .btn-default {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #695ccd;
+    color: white;
+    border-radius: 9999px;
+    font-weight: 400;
+  }
+
+  .btn-default:hover {
+    background-color: #1f1283;
   }
 }
