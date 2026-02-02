@@ -126,10 +126,6 @@ export default function ProjectsList() {
     handleCloseModal();
   };
 
-  const handleNewProject = () => {
-    console.log("New project clicked");
-  };
-
   const filteredProjects = showFavoritesOnly
     ? projects.filter((p) => p.isFavorite)
     : projects;
@@ -146,7 +142,6 @@ export default function ProjectsList() {
         onToggleFavorites={setShowFavoritesOnly}
         sortOrder={sortOrder}
         onSortChange={setSortOrder}
-        onNewProject={handleNewProject}
       />
 
       <div className="px-16 pb-8">

@@ -6,7 +6,6 @@ interface FilterBarProps {
   onToggleFavorites: (value: boolean) => void;
   sortOrder: string;
   onSortChange: (value: string) => void;
-  onNewProject: () => void;
 }
 
 export default function FilterBar({
@@ -15,7 +14,6 @@ export default function FilterBar({
   onToggleFavorites,
   sortOrder,
   onSortChange,
-  onNewProject,
 }: FilterBarProps) {
   return (
     <div className="flex items-center justify-between px-16 py-6">
