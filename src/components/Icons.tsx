@@ -111,7 +111,7 @@ function Upload({ className }: IconProps) {
   );
 }
 
-function Edit({ className }: IconProps) {
+function Edit({ className = "text-blue-02" }: IconProps) {
   return (
     <svg
       width="24"
@@ -123,14 +123,14 @@ function Edit({ className }: IconProps) {
     >
       <path
         d="M20 14.66V20C20 20.5304 19.7893 21.0391 19.4142 21.4142C19.0391 21.7893 18.5304 22 18 22H4C3.46957 22 2.96086 21.7893 2.58579 21.4142C2.21071 21.0391 2 20.5304 2 20V6C2 5.46957 2.21071 4.96086 2.58579 4.58579C2.96086 4.21071 3.46957 4 4 4H9.34"
-        stroke="#695CCD"
+        stroke="currentColor"
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
       <path
         d="M18 2L22 6L12 16H8V12L18 2Z"
-        stroke="#695CCD"
+        stroke="currentColor"
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -139,7 +139,7 @@ function Edit({ className }: IconProps) {
   );
 }
 
-function Trash({ className }: IconProps) {
+function Trash({ className = "text-blue-02" }: IconProps) {
   return (
     <svg
       width="24"
@@ -151,17 +151,17 @@ function Trash({ className }: IconProps) {
     >
       <path
         d="M3 6H5H21"
-        stroke="#695CCD"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z"
-        stroke="#695CCD"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

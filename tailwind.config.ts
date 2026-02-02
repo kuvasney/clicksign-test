@@ -16,6 +16,8 @@ export default {
         "gray-04": "#53525D",
         "gray-05": "#ECECEC",
         "yellow-00": "#FFB23D",
+        "red-00": "#9F0000",
+        "red-01": "#C40000",
       },
       height: {
         header: "80px",
