@@ -1,0 +1,19 @@
+import { GoPlusCircle } from "react-icons/go";
+
+export default function EmptyList() {
+  return (
+    <div
+      className="empty-list-wrapper flex flex-col items-center justify-center bg-white-00 mx-[42px] my-[60px]"
+      style={{ minHeight: "calc(100vh - 80px - 120px)" }}
+    >
+      <p className="text-heading text-blue-01">Nenhum projeto</p>
+      <p className="text-body text-gray-00">
+        Clique no botão abaixo para criar o primeiro e gerenciá-lo.
+      </p>
+      <button className="btn-default mt-8 text-xl py-2 px-6">
+        <GoPlusCircle className="mr-4 size-5" />
+        <span>Novo projeto</span>
+      </button>
+    </div>
+  );
+}

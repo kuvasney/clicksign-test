@@ -8,6 +8,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        'white-00': '#FFFFFF',
         'blue-00': '#1C1930',
         'blue-01': '#1F1283',
         'blue-02': '#695CCD',
