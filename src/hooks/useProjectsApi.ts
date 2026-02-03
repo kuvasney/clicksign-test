@@ -132,7 +132,7 @@ export const useProjectsApi = (projectId?: string) => {
   });
 
   return {
-    projects: projectsQuery.data as IProject[] | undefined,
+    projects: (projectsQuery.data ?? []) as IProject[],
     isProjectsLoading: projectsQuery.isLoading,
     isProjectsError: projectsQuery.isError,
     project: singleProjectQuery.data as IProject | undefined,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchStore } from "@/store/useSearchStore";
 import { GoSearch, GoHistory } from "react-icons/go";
 
@@ -8,6 +8,7 @@ interface SearchBarProps {
 
 export default function SearchBar({ isOpen = false }: SearchBarProps) {
   const [searchHistory] = useState<string[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const { search, setSearch } = useSearchStore();
 
@@ -17,6 +18,12 @@ export default function SearchBar({ isOpen = false }: SearchBarProps) {
     const value = e.target.value;
     setSearch(value);
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      inputRef.current?.focus();
+    }
+  }, [isOpen]);
 
   if (!isOpen) {
     return null;
@@ -31,6 +38,7 @@ export default function SearchBar({ isOpen = false }: SearchBarProps) {
       {" "}
       <div className="relative">
         <input
+          ref={inputRef}
           type="text"
           placeholder="Digite o nome do projeto..."
           className={`w-full bg-white py-2 pl-10 pr-4 h-header ${searchHistory.length > 0 ? "rounded-tr-2xl rounded-tl-2xl" : ""}`}
