@@ -21,7 +21,7 @@ function App() {
       <div className="app-wrapper bg-gray-01 h-full min-h-screen">
         <AppHeader />
         <Routes>
-          <Route path="/projects" element={<Projects />} />
+          <Route path="/" element={<Projects />} />
           <Route path="/new-project" element={<NewProject />} />
           <Route path="/edit-project/:id" element={<EditProject />} />
         </Routes>

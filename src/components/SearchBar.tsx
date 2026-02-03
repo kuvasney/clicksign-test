@@ -16,7 +16,6 @@ export default function SearchBar({ isOpen = false }: SearchBarProps) {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
-    // setSearchHistory([...searchHistory, value]);
   };
 
   if (!isOpen) {

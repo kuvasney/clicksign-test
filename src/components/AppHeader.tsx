@@ -3,7 +3,7 @@ import ProjectSearch from "./Project/ProjectSearch";
 
 export default function AppHeader() {
   const location = useLocation();
-  const isProjectsPage = location.pathname === "/projects";
+  const isProjectsPage = location.pathname === "/";
   return (
     <div className="grid h-header grid-cols-3 items-center bg-blue-00 px-16 shadow-header mb-16">
       <div className="logo-wrapper col-start-2 flex items-center justify-center gap-3">
