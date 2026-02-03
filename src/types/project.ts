@@ -1,4 +1,4 @@
-export interface Project {
+export interface IProject {
   id: string;
   name: string;
   client: string;
@@ -7,3 +7,5 @@ export interface Project {
   isFavorite: boolean;
   coverImage?: string;
 }
+
+export type TSortOrder = "alphabetical" | "startDate" | "endDate" | "favorite";
