@@ -1,0 +1,83 @@
+[
+  {
+    "id": "1",
+    "name": "Atividade Completa",
+    "client": "Clicksign",
+    "startDate": "2024-09-01T12:00:00Z",
+    "endDate": "2024-12-15T12:00:00Z",
+    "isFavorite": true,
+    "coverImage": "/img/cover.png"
+  },
+  {
+    "id": "2",
+    "name": "Criação de Textão",
+    "client": "Clicksign",
+    "startDate": "2024-01-10T12:00:00Z",
+    "endDate": "2024-04-20T12:00:00Z",
+    "isFavorite": false,
+    "coverImage": null
+  },
+  {
+    "id": "3",
+    "name": "Projeto 03",
+    "client": "Clicksign",
+    "startDate": "2023-11-05T12:00:00Z",
+    "endDate": "2024-02-28T12:00:00Z",
+    "isFavorite": false,
+    "coverImage": null
+  },
+  {
+    "id": "4",
+    "name": "Projeto 04",
+    "client": "Clicksign",
+    "startDate": "2024-05-15T12:00:00Z",
+    "endDate": "2024-08-30T12:00:00Z",
+    "isFavorite": false,
+    "coverImage": null
+  },
+  {
+    "id": "5",
+    "name": "Projeto 05",
+    "client": "Clicksign",
+    "startDate": "2023-06-01T12:00:00Z",
+    "endDate": "2023-09-14T12:00:00Z",
+    "isFavorite": false,
+    "coverImage": null
+  },
+  {
+    "id": "6",
+    "name": "Projeto 06",
+    "client": "Clicksign",
+    "startDate": "2024-02-20T12:00:00Z",
+    "endDate": "2024-07-10T12:00:00Z",
+    "isFavorite": false,
+    "coverImage": null
+  },
+  {
+    "id": "7",
+    "name": "Projeto 07",
+    "client": "Clicksign",
+    "startDate": "2023-08-12T12:00:00Z",
+    "endDate": "2023-11-25T12:00:00Z",
+    "isFavorite": true,
+    "coverImage": null
+  },
+  {
+    "id": "8",
+    "name": "Projeto 08",
+    "client": "Clicksign",
+    "startDate": "2024-03-05T12:00:00Z",
+    "endDate": "2024-06-18T12:00:00Z",
+    "isFavorite": false,
+    "coverImage": null
+  },
+  {
+    "id": "9",
+    "name": "Projeto 09",
+    "client": "Clicksign",
+    "startDate": "2024-10-01T12:00:00Z",
+    "endDate": "2025-01-20T12:00:00Z",
+    "isFavorite": false,
+    "coverImage": null
+  }
+]

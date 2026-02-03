@@ -1,0 +1,9 @@
+{
+  "id": "1",
+  "name": "Atividade Completa",
+  "client": "Clicksign",
+  "startDate": "2024-09-01T12:00:00Z",
+  "endDate": "2024-12-15T12:00:00Z",
+  "isFavorite": true,
+  "coverImage": "/img/cover.png"
+}
