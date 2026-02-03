@@ -1,9 +1,9 @@
-import { useSearchStore } from "@/store/useSearchStore";
-import SearchBar from "./SearchBar";
-import { GoSearch } from "react-icons/go";
+import { useLocation } from "react-router-dom";
+import ProjectSearch from "./ProjectsList/ProjectSearch";
 
 export default function AppHeader() {
-  const { setShowSearchBar, showSearchBar } = useSearchStore();
+  const location = useLocation();
+  const isProjectsPage = location.pathname === "/projects";
   return (
     <div className="grid h-header grid-cols-3 items-center bg-blue-00 px-16 shadow-header mb-16">
       <div className="logo-wrapper col-start-2 flex items-center justify-center gap-3">
@@ -12,15 +12,7 @@ export default function AppHeader() {
           Gerenciador de Projetos
         </p>
       </div>
-      <span
-        className="justify-self-end text-white text-xl cursor-pointer"
-        onClick={() => {
-          setShowSearchBar(true);
-        }}
-      >
-        <GoSearch />
-      </span>
-      <SearchBar isOpen={showSearchBar} />
+      {isProjectsPage && <ProjectSearch />}
     </div>
   );
 }
