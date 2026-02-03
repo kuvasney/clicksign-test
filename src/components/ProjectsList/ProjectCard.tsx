@@ -2,9 +2,9 @@ import { useState } from "react";
 import { CalendarCheck, CalendarDay } from "../Icons";
 import { GoKebabHorizontal, GoStar, GoStarFill } from "react-icons/go";
 import ProjectCardOptions from "./ProjectCardOptions";
-import type { Project } from "@/types/project";
+import type { IProject } from "@/types/project";
 
-interface ProjectCardProps extends Project {
+interface ProjectCardProps extends IProject {
   onToggleFavorite: (id: string) => void;
   onEdit: (id: string) => void;
   onRemove: (id: string) => void;
@@ -88,11 +88,23 @@ export default function ProjectCard({
         <div className="space-y-2 text-xs text-gray-00">
           <div className="flex items-center gap-2">
             <CalendarDay className="w-4 h-4" />
-            <span>{startDate}</span>
+            <span>
+              {new Date(startDate).toLocaleDateString("pt-BR", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })}
+            </span>
           </div>
           <div className="flex items-center gap-2">
             <CalendarCheck className="w-4 h-4" />
-            <span>{endDate}</span>
+            <span>
+              {new Date(endDate).toLocaleDateString("pt-BR", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })}
+            </span>
           </div>
         </div>
       </div>

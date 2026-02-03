@@ -1,11 +1,12 @@
 import NewProjectButton from "./ProjectsList/NewProjectButton";
+import type { TSortOrder } from "@/types/project";
 
 interface FilterBarProps {
   totalProjects: number;
   showFavoritesOnly: boolean;
   onToggleFavorites: (value: boolean) => void;
-  sortOrder: string;
-  onSortChange: (value: string) => void;
+  sortOrder: TSortOrder;
+  onSortChange: (value: TSortOrder) => void;
 }
 
 export default function FilterBar({
@@ -34,7 +35,7 @@ export default function FilterBar({
             aria-checked={showFavoritesOnly}
             onClick={() => onToggleFavorites(!showFavoritesOnly)}
             className={`relative inline-flex h-6 w-12 items-center rounded-full transition-colors ${
-              showFavoritesOnly ? "bg-blue-02" : "bg-gray-04"
+              showFavoritesOnly ? "bg-yellow-00" : "bg-gray-04"
             }`}
           >
             <span
@@ -48,12 +49,12 @@ export default function FilterBar({
 
         <select
           value={sortOrder}
-          onChange={(e) => onSortChange(e.target.value)}
+          onChange={(e) => onSortChange(e.target.value as TSortOrder)}
           className="w-full md:w-[296px] px-4 py-2 border rounded-lg text-base text-gray-02 border-gray-02"
         >
           <option value="alphabetical">Ordem alfabética</option>
-          <option value="date">Data de criação</option>
-          <option value="end-date">Data de término</option>
+          <option value="startDate">Iniciados mais recentes</option>
+          <option value="endDate">Prazo mais próximo</option>
         </select>
 
         <NewProjectButton />
