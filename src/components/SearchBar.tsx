@@ -1,34 +1,40 @@
 import { useState } from "react";
+import { useSearchStore } from "@/store/useSearchStore";
 import { GoSearch, GoHistory } from "react-icons/go";
 
 interface SearchBarProps {
   isOpen?: boolean;
-  onClose?: () => void;
 }
 
-export default function SearchBar({ isOpen, onClose }: SearchBarProps) {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+export default function SearchBar({ isOpen = false }: SearchBarProps) {
+  const [searchHistory] = useState<string[]>([]);
 
-  const mockSearchResults = [
-    "Project 01",
-    "Project 02",
-    "Project 03",
-    "Project 04",
-  ];
+  const { search, setSearch } = useSearchStore();
+
+  const mockSearchResults: string[] = [];
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearch(value);
+    // setSearchHistory([...searchHistory, value]);
+  };
 
   if (!isOpen) {
     return null;
   }
 
   return (
-    <div className="absolute shadow-header w-full border-2 border-blue-02 bg-white rounded-2xl top-0 left-0 z-50">
+    <div
+      className={`absolute shadow-header w-full bg-white top-0 left-0 z-50 ${searchHistory.length > 0 ? "rounded-2xl border-2 border-blue-02 " : ""}`}
+    >
+      {" "}
       <div className="relative">
         <input
           type="text"
           placeholder="Digite o nome do projeto..."
-          className="w-full bg-white py-2 pl-10 pr-4 h-header rounded-tr-2xl rounded-tl-2xl"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          className={`w-full bg-white py-2 pl-10 pr-4 h-header ${searchHistory.length > 0 ? "rounded-tr-2xl rounded-tl-2xl" : ""}`}
+          value={search}
+          onChange={handleSearchChange}
         />
         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-02">
           <GoSearch />
@@ -39,10 +45,6 @@ export default function SearchBar({ isOpen, onClose }: SearchBarProps) {
           <div
             key={index}
             className="px-6 py-4 border-b last:border-b-0 hover:bg-gray-05 cursor-pointer"
-            onClick={() => {
-              setSearchTerm(result);
-              if (onClose) onClose();
-            }}
           >
             <GoHistory className="inline mr-2" />
             {result}

@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useSearchStore } from "@/store/useSearchStore";
 import SearchBar from "./SearchBar";
 import { GoSearch } from "react-icons/go";
 
 export default function AppHeader() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { setShowSearchBar, showSearchBar } = useSearchStore();
   return (
     <div className="grid h-header grid-cols-3 items-center bg-blue-00 px-16 shadow-header mb-16">
       <div className="logo-wrapper col-start-2 flex items-center justify-center gap-3">
@@ -15,17 +15,12 @@ export default function AppHeader() {
       <span
         className="justify-self-end text-white text-xl cursor-pointer"
         onClick={() => {
-          setIsSearchOpen(true);
+          setShowSearchBar(true);
         }}
       >
         <GoSearch />
       </span>
-      <SearchBar
-        isOpen={isSearchOpen}
-        onClose={() => {
-          setIsSearchOpen(false);
-        }}
-      />
+      <SearchBar isOpen={showSearchBar} />
     </div>
   );
 }

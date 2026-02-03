@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useProjectsApi } from "@/hooks/useProjectsApi";
 import { useSortByStore } from "@/store/useSortByStore";
+import { useSearchStore } from "@/store/useSearchStore";
 import EmptyList from "./EmptyList";
 import ProjectCard from "./ProjectCard";
 import FilterBar from "../FilterBar";
 import Modal from "../Modal";
 import type { IProject, TSortOrder } from "@/types/project";
+import ButtonVoltar from "../ButtonVoltar";
 
 export default function ProjectsList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,12 +20,15 @@ export default function ProjectsList() {
     updateError,
     deleteProject,
   } = useProjectsApi();
+
   const {
     showOnlyFavorites,
     toggleShowOnlyFavorites,
     sortOrder,
     setSortOrder,
   } = useSortByStore();
+
+  const { search, setSearch, setShowSearchBar } = useSearchStore();
 
   const handleToggleFavorite = (id: string) => {
     const project = projects?.find((p) => p.id === id);
@@ -55,6 +60,11 @@ export default function ProjectsList() {
 
     deleteProject({ projectId: Number(selectedProject.id) });
     handleCloseModal();
+  };
+
+  const closeSearchBar = () => {
+    setSearch("");
+    setShowSearchBar(false);
   };
 
   const filteredProjects = (projects: IProject[], sortOrder: TSortOrder) => {
@@ -107,8 +117,41 @@ export default function ProjectsList() {
     );
   }
 
+  if (search.length >= 3) {
+    const searchedProjects = (projects ?? []).filter(
+      (project) =>
+        project.name.toLowerCase().includes(search.toLowerCase()) ||
+        project.client.toLowerCase().includes(search.toLowerCase()),
+    );
+
+    return (
+      <div className="px-16 pb-8">
+        <ButtonVoltar onClick={closeSearchBar} />
+        <h2 className="text-2xl font-semibold text-blue-01">
+          Resultado da busca
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 mt-6">
+          {searchedProjects.length === 0 && (
+            <div className="flex justify-center items-center h-64">
+              <p>Nenhum projeto encontrado para "{search}".</p>
+            </div>
+          )}
+          {searchedProjects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              {...project}
+              onToggleFavorite={() => handleToggleFavorite(project.id)}
+              onEdit={handleEditProject}
+              onRemove={handleOpenRemoveModal}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <div onClick={closeSearchBar}>
       <FilterBar
         totalProjects={projects?.length ?? 0}
         showFavoritesOnly={showOnlyFavorites}
