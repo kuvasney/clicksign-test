@@ -1,13 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CalendarCheck, CalendarDay } from "../Icons";
 import { GoKebabHorizontal, GoStar, GoStarFill } from "react-icons/go";
 import ProjectCardOptions from "./ProjectCardOptions";
 import type { IProject } from "@/types/project";
 
 interface ProjectCardProps extends IProject {
-  onToggleFavorite: (id: string) => void;
-  onEdit: (id: string) => void;
-  onRemove: (id: string) => void;
+  onToggleFavorite: (id: number) => void;
+  onEdit: (id: number) => void;
+  onRemove: (id: number) => void;
 }
 
 export default function ProjectCard({
@@ -22,11 +23,13 @@ export default function ProjectCard({
   onEdit,
   onRemove,
 }: ProjectCardProps) {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleEdit = () => {
     onEdit(id);
     setIsMenuOpen(false);
+    navigate(`/edit-project/${id}`);
   };
 
   const handleRemove = () => {

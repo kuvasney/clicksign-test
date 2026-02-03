@@ -1,9 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/config/supabase";
-import { API_CONFIG, API_ENDPOINTS } from "@/config/api";
 import type { IProject, IProjectInput } from "@/types/project";
 
-export const useProjectsApi = () => {
+export const useProjectsApi = (projectId?: string) => {
   const queryClient = useQueryClient();
 
   const uploadCoverImage = async (file: File): Promise<string> => {
@@ -21,7 +20,21 @@ export const useProjectsApi = () => {
       .from("project-cover")
       .getPublicUrl(`covers/${fileName}`);
 
-    return publicUrl.publicUrl;
+    return `${publicUrl.publicUrl}?v=${Date.now()}`;
+  };
+
+  const fetchSingleProject = async (id: string) => {
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      throw new Error("Erro ao buscar o projeto");
+    }
+
+    return data;
   };
 
   const fetchProjects = async () => {
@@ -48,43 +61,43 @@ export const useProjectsApi = () => {
 
   const updateProject = async (
     projectId: number,
-    projectData: Partial<IProject>,
+    projectData: Partial<IProjectInput>,
   ) => {
-    const response = await fetch(
-      `${API_CONFIG.baseURL}${API_ENDPOINTS.projects}/${projectId}`,
-      {
-        method: "PUT",
-        headers: { ...API_CONFIG.headers },
-        body: JSON.stringify(projectData),
-      },
-    );
+    const { data, error } = await supabase
+      .from("projects")
+      .update(projectData)
+      .eq("id", projectId);
 
-    if (!response.ok) {
+    if (error) {
       throw new Error("Erro ao atualizar o projeto");
     }
 
-    return await response.json();
+    return data;
   };
 
   const deleteProject = async (projectId: number) => {
-    const response = await fetch(
-      `${API_CONFIG.baseURL}${API_ENDPOINTS.projects}/${projectId}`,
-      {
-        method: "DELETE",
-        headers: { ...API_CONFIG.headers },
-      },
-    );
+    const { data, error } = await supabase
+      .from("projects")
+      .delete()
+      .eq("id", projectId);
 
-    if (!response.ok) {
+    if (error) {
       throw new Error("Erro ao deletar o projeto");
     }
 
-    return await response.json();
+    return data;
   };
 
   const projectsQuery = useQuery({
     queryKey: ["projects"],
     queryFn: fetchProjects,
+  });
+
+  const singleProjectQuery = useQuery({
+    queryKey: ["project", projectId],
+    queryFn: () => fetchSingleProject(projectId!),
+    enabled: !!projectId, // Só executa se projectId existir
+    staleTime: 0, // Sem cache - sempre busca novo
   });
 
   const createProjectMutation = useMutation({
@@ -102,8 +115,11 @@ export const useProjectsApi = () => {
       projectId: number;
       data: Partial<IProject>;
     }) => updateProject(projectId, data),
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({
+        queryKey: ["project", String(variables.projectId)],
+      });
     },
   });
 
@@ -119,6 +135,9 @@ export const useProjectsApi = () => {
     projects: projectsQuery.data as IProject[] | undefined,
     isProjectsLoading: projectsQuery.isLoading,
     isProjectsError: projectsQuery.isError,
+    project: singleProjectQuery.data as IProject | undefined,
+    isProjectLoading: singleProjectQuery.isLoading,
+    isProjectError: singleProjectQuery.isError,
     uploadCoverImage,
     createProject: createProjectMutation.mutate,
     isCreating: createProjectMutation.isPending,
@@ -126,6 +145,7 @@ export const useProjectsApi = () => {
     createSuccess: createProjectMutation.isSuccess,
     updateProject: updateProjectMutation.mutate,
     isUpdating: updateProjectMutation.isPending,
+    updateSuccess: updateProjectMutation.isSuccess,
     updateError: updateProjectMutation.error,
     deleteProject: deleteProjectMutation.mutate,
     isDeleting: deleteProjectMutation.isPending,

@@ -30,7 +30,7 @@ export default function ProjectsList() {
 
   const { search, setSearch, setShowSearchBar } = useSearchStore();
 
-  const handleToggleFavorite = (id: string) => {
+  const handleToggleFavorite = (id: number) => {
     const project = projects?.find((p) => p.id === id);
     if (!project) return;
 
@@ -40,11 +40,11 @@ export default function ProjectsList() {
     });
   };
 
-  const handleEditProject = (id: string) => {
+  const handleEditProject = (id: number) => {
     console.log("Edit project:", id);
   };
 
-  const handleOpenRemoveModal = (id: string) => {
+  const handleOpenRemoveModal = (id: number) => {
     const project = projects?.find((p) => p.id === id) ?? null;
     setSelectedProject(project);
     setIsModalOpen(true);

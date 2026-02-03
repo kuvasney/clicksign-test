@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AppHeader from "@/components/AppHeader.tsx";
 import Projects from "./Pages/Projects";
 import NewProject from "./Pages/NewProject";
+import EditProject from "./Pages/EditProject";
 import "./App.css";
 
 const queryClient = new QueryClient({
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/projects" element={<Projects />} />
           <Route path="/new-project" element={<NewProject />} />
+          <Route path="/edit-project/:id" element={<EditProject />} />
         </Routes>
       </div>
       <ReactQueryDevtools initialIsOpen={false} />
