@@ -32,6 +32,15 @@ export default {
       fontFamily: {
         sans: ['"Encode Sans Semi Expanded"', "sans-serif"],
       },
+      animation: {
+        slideIn: "slideIn 0.3s ease-out forwards",
+      },
+      keyframes: {
+        slideIn: {
+          "0%": { width: "0", opacity: "0" },
+          "100%": { width: "100%", opacity: "1" },
+        },
+      },
     },
   },
   plugins: [],

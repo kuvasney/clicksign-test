@@ -25,7 +25,9 @@ export default function SearchBar({ isOpen = false }: SearchBarProps) {
 
   return (
     <div
-      className={`absolute shadow-header w-full bg-white top-0 left-0 z-50 ${searchHistory.length > 0 ? "rounded-2xl border-2 border-blue-02 " : ""}`}
+      className={`absolute shadow-header bg-white top-0 right-0 z-50 rounded-2xl border-2 border-blue-02 ${
+        isOpen ? "animate-slideIn" : "w-0 opacity-0"
+      }`}
     >
       {" "}
       <div className="relative">
