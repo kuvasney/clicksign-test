@@ -91,3 +91,4 @@ VITE_SUPABASE_ANON_KEY=...
 
 - A integração com Supabase exige configuração de **RLS/Policies** nas tabelas e no bucket de storage.
 - O bucket de imagens esperado é `project-cover`.
+- As informações sobre os acessos da supabase serão enviados separadamente
