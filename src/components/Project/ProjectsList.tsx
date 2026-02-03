@@ -107,7 +107,10 @@ export default function ProjectsList() {
     );
   }
 
-  if (projects?.length === 0 || projects === undefined) {
+  if (
+    projects?.length === 0 ||
+    (projects === undefined && !isProjectsLoading)
+  ) {
     return <EmptyList />;
   }
 
