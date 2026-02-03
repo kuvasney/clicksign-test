@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import ProjectSearch from "./ProjectsList/ProjectSearch";
+import ProjectSearch from "./Project/ProjectSearch";
 
 export default function AppHeader() {
   const location = useLocation();

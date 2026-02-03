@@ -1,4 +1,4 @@
-import { GoPlusCircle } from "react-icons/go";
+import NewProjectButton from "./NewProjectButton";
 
 export default function EmptyList() {
   return (
@@ -10,10 +10,9 @@ export default function EmptyList() {
       <p className="text-sm text-gray-00">
         Clique no botão abaixo para criar o primeiro e gerenciá-lo.
       </p>
-      <button className="btn-default mt-8 text-xl py-2 px-6">
-        <GoPlusCircle className="mr-4 size-5" />
-        <span>Novo projeto</span>
-      </button>
+      <div className="mt-6">
+        <NewProjectButton />
+      </div>
     </div>
   );
 }

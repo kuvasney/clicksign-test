@@ -89,7 +89,12 @@ export default function ProjectsList() {
         result = projects;
     }
     if (showOnlyFavorites) {
-      result = result.filter((p) => p.isFavorite);
+      const _result = result.filter((p) => p.isFavorite);
+      if (_result.length > 0) {
+        result = _result;
+      } else {
+        result = [];
+      }
     }
     return result;
   };
@@ -102,10 +107,7 @@ export default function ProjectsList() {
     );
   }
 
-  if (
-    filteredProjects(projects ?? [], sortOrder).length === 0 &&
-    !isProjectsLoading
-  ) {
+  if (projects?.length === 0 || projects === undefined) {
     return <EmptyList />;
   }
 
@@ -164,6 +166,11 @@ export default function ProjectsList() {
           <div className="col-span-full text-red-01">{updateError.message}</div>
         )}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+          {filteredProjects(projects ?? [], sortOrder).length === 0 && (
+            <div>
+              <p>Nenhum projeto encontrado com os filtros aplicados.</p>
+            </div>
+          )}
           {filteredProjects(projects ?? [], sortOrder).map((project) => (
             <ProjectCard
               key={project.id}

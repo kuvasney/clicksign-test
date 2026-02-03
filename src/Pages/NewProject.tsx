@@ -1,5 +1,5 @@
 import ButtonVoltar from "@/components/ButtonVoltar";
-import CreateProject from "@/components/CreateProject";
+import CreateProject from "@/components/Project/CreateProject";
 
 export default function NewProject() {
   return (

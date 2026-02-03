@@ -1,4 +1,4 @@
-import { Edit, Trash } from "../../components/Icons";
+import { Edit, Trash } from "../Icons";
 
 interface ProjectCardOptionsProps {
   onEdit: () => void;

@@ -1,41 +1,49 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/config/supabase";
 import { API_CONFIG, API_ENDPOINTS } from "@/config/api";
-import type { IProject } from "@/types/project";
+import type { IProject, IProjectInput } from "@/types/project";
 
 export const useProjectsApi = () => {
   const queryClient = useQueryClient();
 
-  const fetchProjects = async () => {
-    const response = await fetch(
-      `${API_CONFIG.baseURL}${API_ENDPOINTS.projects}`,
-      {
-        method: "GET",
-        headers: { ...API_CONFIG.headers },
-      },
-    );
+  const uploadCoverImage = async (file: File): Promise<string> => {
+    const fileName = `${Date.now()}-${file.name}`;
+    const { error } = await supabase.storage
+      .from("project-cover")
+      .upload(`covers/${fileName}`, file);
 
-    if (!response.ok) {
+    if (error) {
+      throw new Error("Erro ao fazer upload da imagem");
+    }
+
+    // Obter URL pública
+    const { data: publicUrl } = supabase.storage
+      .from("project-cover")
+      .getPublicUrl(`covers/${fileName}`);
+
+    return publicUrl.publicUrl;
+  };
+
+  const fetchProjects = async () => {
+    const { data, error } = await supabase.from("projects").select("*");
+
+    if (error) {
       throw new Error("Erro ao buscar os projetos");
     }
 
-    return await response.json();
+    return data;
   };
 
-  const postProject = async (projectData: IProject) => {
-    const response = await fetch(
-      `${API_CONFIG.baseURL}${API_ENDPOINTS.projects}`,
-      {
-        method: "POST",
-        headers: { ...API_CONFIG.headers },
-        body: JSON.stringify(projectData),
-      },
-    );
+  const postProject = async (projectData: IProjectInput) => {
+    const { data, error } = await supabase
+      .from("projects")
+      .insert([projectData]);
 
-    if (!response.ok) {
+    if (error) {
       throw new Error("Erro ao criar o projeto");
     }
 
-    return await response.json();
+    return data;
   };
 
   const updateProject = async (
@@ -111,9 +119,11 @@ export const useProjectsApi = () => {
     projects: projectsQuery.data as IProject[] | undefined,
     isProjectsLoading: projectsQuery.isLoading,
     isProjectsError: projectsQuery.isError,
+    uploadCoverImage,
     createProject: createProjectMutation.mutate,
     isCreating: createProjectMutation.isPending,
     createError: createProjectMutation.error,
+    createSuccess: createProjectMutation.isSuccess,
     updateProject: updateProjectMutation.mutate,
     isUpdating: updateProjectMutation.isPending,
     updateError: updateProjectMutation.error,

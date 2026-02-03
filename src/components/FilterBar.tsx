@@ -1,4 +1,4 @@
-import NewProjectButton from "./ProjectsList/NewProjectButton";
+import NewProjectButton from "./Project/NewProjectButton";
 import type { TSortOrder } from "@/types/project";
 
 interface FilterBarProps {

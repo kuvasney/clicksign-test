@@ -1,24 +1,39 @@
 import { useState, useRef } from "react";
-import { Trash, Upload } from "./Icons";
+import { useProjectsApi } from "@/hooks/useProjectsApi";
+import { Trash, Upload } from "@/components/Icons";
+import type { IProjectInput } from "@/types/project";
+
 export default function CreateProject() {
   const [projectName, setProjectName] = useState("");
   const [clientName, setClientName] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [coverImage, setCoverImage] = useState<File | null>(null);
+  const [coverImageFile, setCoverImageFile] = useState<File | null>(null);
+  const [coverImagePreview, setCoverImagePreview] = useState<string | null>(
+    null,
+  );
   const [errorList, setErrorList] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const {
+    createProject,
+    uploadCoverImage,
+    createError,
+    createSuccess,
+    isCreating,
+  } = useProjectsApi();
 
   const clearForm = () => {
     setProjectName("");
     setClientName("");
     setStartDate("");
     setEndDate("");
-    setCoverImage(null);
+    setCoverImageFile(null);
+    setCoverImagePreview(null);
     setErrorList([]);
   };
 
-  const handleNewProject = (e: React.FormEvent) => {
+  const handleNewProject = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorList([]);
     const errors: string[] = [];
@@ -39,15 +54,33 @@ export default function CreateProject() {
     setErrorList(errors);
 
     if (errors.length === 0) {
-      // Submit form logic here
-      console.log("Project Created:", {
-        projectName,
-        clientName,
-        startDate,
-        endDate,
-        coverImage,
-      });
-      clearForm();
+      try {
+        let coverImageUrl: string | undefined = undefined;
+
+        // Fazer upload da imagem se houver
+        if (coverImageFile) {
+          coverImageUrl = await uploadCoverImage(coverImageFile);
+        }
+
+        const projectData: IProjectInput = {
+          name: projectName,
+          client: clientName,
+          startDate: startDate,
+          endDate: endDate,
+          isFavorite: false,
+          coverImage: coverImageUrl,
+        };
+
+        createProject(projectData, {
+          onSuccess: () => clearForm(),
+          onError: () => {
+            console.error("Erro ao criar o projeto");
+          },
+        });
+      } catch (error) {
+        console.error("Erro no upload:", error);
+        setErrorList(["coverImage"]);
+      }
     }
   };
   return (
@@ -170,18 +203,21 @@ export default function CreateProject() {
               Capa do projeto
             </label>
             <div className="mt-1 flex flex-col items-center justify-center rounded-md border border-dashed border-gray-03 text-center">
-              {coverImage && (
-                <div className="relative ">
+              {coverImagePreview && (
+                <div className="cover-image-display relative">
                   <button
                     className="absolute top-8 right-8 bg-white rounded-full p-2 shadow-default"
-                    onClick={() => setCoverImage(null)}
+                    onClick={() => {
+                      setCoverImageFile(null);
+                      setCoverImagePreview(null);
+                    }}
                   >
                     <Trash className="text-gray-00 w-5 h-5" />
                   </button>
-                  <img src={URL.createObjectURL(coverImage)} />
+                  <img src={coverImagePreview} alt="Cover preview" />
                 </div>
               )}
-              {!coverImage && (
+              {!coverImagePreview && (
                 <div className="text-gray-00 font-light py-6 px-8">
                   <div className="text-gray-00 font-light">
                     <Upload className="mx-auto mb-4" />
@@ -201,7 +237,9 @@ export default function CreateProject() {
                     className="hidden"
                     onChange={(e) => {
                       if (e.target.files && e.target.files.length > 0) {
-                        setCoverImage(e.target.files[0]);
+                        const file = e.target.files[0];
+                        setCoverImageFile(file);
+                        setCoverImagePreview(URL.createObjectURL(file));
                       }
                     }}
                   />
@@ -212,10 +250,15 @@ export default function CreateProject() {
 
           <button
             type="submit"
-            className="mt-4 w-full rounded-full bg-blue-02 py-3 text-white hover:bg-blue-01"
+            disabled={isCreating}
+            className="mt-4 w-full rounded-full bg-blue-02 py-3 text-white hover:bg-blue-01 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Salvar projeto
+            {isCreating ? "Salvando..." : "Salvar projeto"}
           </button>
+          {createError && <p className="text-red-01">{createError.message}</p>}
+          {createSuccess && (
+            <p className="text-green-01">Projeto criado com sucesso!</p>
+          )}
         </div>
       </form>
     </div>
